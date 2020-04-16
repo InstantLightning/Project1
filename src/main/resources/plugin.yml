@@ -1,0 +1,11 @@
+name: Project1
+version: 1.0.0
+main: com.gmail.shawnpkeene.project1.Project1
+
+commands:
+  gm:
+    usage: /<command>
+    Description: Changes gamemode
+  lobby:
+    usage: /<command>
+    Description: Brings player to lobby
