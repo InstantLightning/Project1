@@ -20,5 +20,6 @@ public class Project1 extends JavaPlugin {
         CustomRecipes items =new CustomRecipes();
         items.customRecipeNumberOne();
         getLogger().info("Project1 enabled");
+
     }
 }
