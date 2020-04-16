@@ -10,50 +10,51 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 
 public class Commands implements Listener, CommandExecutor {
-    public String gm = "gm";
-    public String lobby = "lobby";
+    public static final String LOBBY = "lobby";
+    public static final String GM = "gm";
     @Override
     public boolean onCommand(CommandSender sender, Command gamemode, String label, String[] args) {
-        if (sender instanceof Player) {
-            //lobby command
-            if(gamemode.getName().equalsIgnoreCase(lobby)) {
-                Location loc = new Location(((Player) sender).getWorld(),566.5f, 4, -535.5f);
-                ((Player) sender).teleport(loc);
-                JoinVillager villager = new JoinVillager();
-                villager.setPlayersInZone(-1);
-                sender.sendMessage(ChatColor.GOLD + "woosh!");
+        if (!(sender instanceof Player))
+            return true;
+        Player player = (Player) sender;
+        //LOBBY command
+        if (gamemode.getName().equalsIgnoreCase(LOBBY)) {
+            Location loc = new Location(((Player) sender).getWorld(),566.5f, 4, -535.5f);
+            player.teleport(loc);
+            JoinVillager villager = new JoinVillager();
+            villager.setPlayersInZone(-1);
+            sender.sendMessage(ChatColor.GOLD + "woosh!");
+            return true;
+        }
+        //gamemode command
+        if (gamemode.getName().equalsIgnoreCase(GM) && sender.isOp()) {
+            if (args.length!=0) {
+                String number = args[0];
+                if (number.equals("1")) {
+                    player.setGameMode(GameMode.CREATIVE);
+                    player.sendMessage("You set your gamemode to 1!");
+                }
+                if (number.equals("0")) {
+                    player.setGameMode(GameMode.SURVIVAL);
+                    player.sendMessage("You set your gamemode to 0!");
+                }
+                if (number.equals("2")) {
+                    player.setGameMode(GameMode.ADVENTURE);
+                    player.sendMessage("You set your gamemode to 2!");
+                }
+                if (number.equals("3")) {
+                    player.setGameMode(GameMode.SPECTATOR);
+                    player.sendMessage("You set your gamemode to 3!");
+                }
+                return true;
+            } else {
+                player.sendMessage("That didnt work!");
                 return true;
             }
-            //gamemode command
-            if(gamemode.getName().equalsIgnoreCase(gm) && sender.isOp()) {
-                if(args.length!=0) {
-                    String number = args[0];
-                    if (number.equals("1")) {
-                        ((Player) sender).getPlayer().setGameMode(GameMode.CREATIVE);
-                        ((Player) sender).getPlayer().sendMessage("You set your gamemode to 1!");
-                    }
-                    if (number.equals("0")) {
-                        ((Player) sender).getPlayer().setGameMode(GameMode.SURVIVAL);
-                        ((Player) sender).getPlayer().sendMessage("You set your gamemode to 0!");
-                    }
-                    if (number.equals("2")) {
-                        ((Player) sender).getPlayer().setGameMode(GameMode.ADVENTURE);
-                        ((Player) sender).getPlayer().sendMessage("You set your gamemode to 2!");
-                    }
-                    if (number.equals("3")) {
-                        ((Player) sender).getPlayer().setGameMode(GameMode.SPECTATOR);
-                        ((Player) sender).getPlayer().sendMessage("You set your gamemode to 3!");
-                    }
-                    return true;
-                } else {
-                    ((Player) sender).getPlayer().sendMessage("That didnt work!");
-                    return false;
-                }
-            }
-        }else {
+
+        } else {
             sender.sendMessage(ChatColor.RED + "That didn't work!");
             return true;
         }
-        return false;
     }
 }
