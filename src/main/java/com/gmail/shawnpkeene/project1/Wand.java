@@ -109,9 +109,9 @@ public class Wand implements Listener {
                     Location locSearch = loc;
                     boolean solid = false;
 
-                    for (double i = -0.2; i <= 0.2; i += .1) {
-                        for (double j = -0.2; j <= 0.2; j += .1) {
-                            for(double k = -0.2; k <= 0.2; k += .1) {
+                    for (double i = -0.1; i <= 0.1; i += .1) {
+                        for (double j = -0.1; j <= 0.1; j += .1) {
+                            for(double k = -0.1; k <= 0.1; k += .1) {
                                 locSearch.add(i, j, k);
                                 if (distance > 50 || locSearch.getBlock().getType().isSolid()) {
                                     solid = true;

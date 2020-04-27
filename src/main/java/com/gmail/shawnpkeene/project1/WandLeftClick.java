@@ -64,6 +64,7 @@ public class WandLeftClick implements Listener {
 
             if (north) {
                 for (int i = -1; i <= 1; ++i) {
+                    //For the row above the players head and one forward
                     blockLoc = blockLoc.add(i, 3, 1);
                     purpleBlock = blockLoc.getBlock();
                     if (purpleBlock.getType() == Material.AIR) {
@@ -72,6 +73,7 @@ public class WandLeftClick implements Listener {
                         blockLoc = loc;
                     }
                     for (int j = 1; j <= 2; ++j) {
+                        //This one I do not know
                         blockLoc = loc.add(0, j, 0);
                         purpleBlock = blockLoc.getBlock();
                         if (purpleBlock.getType() == Material.AIR) {
@@ -82,7 +84,7 @@ public class WandLeftClick implements Listener {
                     }
                 }
                 for (int i = 1; i <= 2; ++i) {
-
+                    //Far sides of shield
                     blockLoc = blockLoc.add(-3, i, 0);
                     purpleBlock = blockLoc.getBlock();
                     if (purpleBlock.getType() == Material.AIR){
@@ -98,8 +100,7 @@ public class WandLeftClick implements Listener {
                         purpleBlock.setData((byte) 10);
                         blockLoc = loc;
                     }
-
-
+                    //These two if statements are supposed to be the lower corners of the shields
                     blockLoc = blockLoc.add(-2, i, 1);
                     purpleBlock = blockLoc.getBlock();
                     if (purpleBlock.getType() == Material.AIR){
@@ -116,7 +117,7 @@ public class WandLeftClick implements Listener {
                         blockLoc = loc;
                     }
                 }
-
+                //These two are the upper corners
                 blockLoc = blockLoc.add( 2, 3, 0);
                 purpleBlock = blockLoc.getBlock();
                 purpleBlock.setType(Material.STAINED_GLASS);
