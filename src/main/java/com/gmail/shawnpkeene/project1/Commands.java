@@ -17,15 +17,19 @@ public class Commands implements Listener, CommandExecutor {
         if (!(sender instanceof Player))
             return true;
         Player player = (Player) sender;
+        TeamBalance team = new TeamBalance();
+
         //LOBBY command
         if (gamemode.getName().equalsIgnoreCase(LOBBY)) {
             Location loc = new Location(((Player) sender).getWorld(),566.5f, 4, -535.5f);
             player.teleport(loc);
             JoinVillager villager = new JoinVillager();
+            team.onLeaveGame(player);
             villager.setPlayersInZone(-1);
             sender.sendMessage(ChatColor.GOLD + "woosh!");
             return true;
         }
+
         //gamemode command
         if (gamemode.getName().equalsIgnoreCase(GM) && sender.isOp()) {
             if (args.length!=0) {

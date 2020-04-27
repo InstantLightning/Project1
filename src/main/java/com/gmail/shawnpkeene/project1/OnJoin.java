@@ -13,7 +13,7 @@ public class OnJoin implements Listener {
         Player player = event.getPlayer();
         event.setJoinMessage("");
         player.sendMessage(ChatColor.GOLD + "Welcome back to your server");
-        Location spawn = new Location(player.getWorld(), 565.5f,4.2f,-535.5f);
+        Location spawn = new Location(player.getWorld(), 565.5D,4.2D,-535.5D);
         player.teleport(spawn);
     }
 }

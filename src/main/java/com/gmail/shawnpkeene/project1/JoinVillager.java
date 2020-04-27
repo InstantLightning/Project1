@@ -9,16 +9,13 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
-import org.bukkit.event.player.PlayerMoveEvent;
-import org.bukkit.event.player.PlayerPortalEvent;
-import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.plugin.Plugin;
 public class JoinVillager implements Listener {
 
     private Plugin plugin = Project1.getPlugin(Project1.class);
     private Object Villager;
-    public static int amountOfPlayers;
+    private static int amountOfPlayers;
 
 
     @EventHandler
@@ -26,7 +23,7 @@ public class JoinVillager implements Listener {
         Entity entity = event.getRightClicked();
         Player player = event.getPlayer();
         InventoryCommands inventory = new InventoryCommands();
-        if(entity instanceof Villager) {
+        if (entity instanceof Villager) {
             event.setCancelled(true);
             inventory.newGUI(player);
         }
@@ -36,15 +33,18 @@ public class JoinVillager implements Listener {
     }
 
     @EventHandler
-    public void clickInventory (InventoryClickEvent event) {
-        Player player = (Player)event.getWhoClicked();
-        Location loc = new Location(player.getWorld(), 558.8f, 5, -570.5f);
+    public void clickInventory(InventoryClickEvent event) {
+        Player player = (Player) event.getWhoClicked();
+        Location loc = new Location(player.getWorld(), 558.8D, 5D, -570.5D);
         Inventory gui = event.getClickedInventory();
-        if(event.getCurrentItem() == null) {
+
+        if (event.getCurrentItem() == null) {
             return;
         }
+
         if (gui.getName().equals("Sharks and Minnows Games")) {
-            if (event.getCurrentItem().getType().equals(Material.ENDER_PEARL)){
+            if (event.getCurrentItem().getType() == Material.ENDER_PEARL){
+                TeamBalance.teamBalance(player);
                 player.teleport(loc);
                 setPlayersInZone(1);
             }
@@ -66,21 +66,26 @@ public class JoinVillager implements Listener {
         }
     } */
     public void setPlayersInZone(int i) {
+
         GameStart game = new GameStart();
-        amountOfPlayers = amountOfPlayers+i;
-        if(amountOfPlayers < 0) {
+        amountOfPlayers += i;
+
+        if (amountOfPlayers < 0) {
             amountOfPlayers = 0;
+            game.cancel();
         }
-        if(amountOfPlayers >= 2){
+
+        if (amountOfPlayers >= 2) {
             game.runTaskTimer(plugin, 0, 20);
-            plugin.getServer().broadcastMessage("if statement in setPlayersInZone ran");
+            //Bukkit.broadcastMessage("if statement in setPlayersInZone ran");
         }
     }
+
     public int getAmountOfPlayers() {
         return amountOfPlayers;
     }
 
-    public void runGame(){
+    public void runGame() {
 
     }
 }
