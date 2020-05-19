@@ -34,7 +34,6 @@ public class Wand implements Listener {
 
         Player player = event.getPlayer();
         ItemStack hand = player.getInventory().getItemInMainHand();
-
         if (hand == null || hand.getType() == Material.AIR) {
             return;
         }
@@ -63,6 +62,7 @@ public class Wand implements Listener {
                    }
                 }
             }.runTaskTimer(plugin, 0, 20);
+
             new BukkitRunnable() {
                 double distance = 0.0;
 
@@ -103,6 +103,12 @@ public class Wand implements Listener {
                             KILLS.put(player.getUniqueId(), ++kills);
                             String valueInt = String.valueOf(KILLS.get(player.getUniqueId()));
                             plugin.getServer().broadcastMessage("Player has " + valueInt + " kills");
+
+                            if (onlinePlayer.getHealth() == 0.0) {
+                                FileUtilities.saveToKillsFile(onlinePlayer.getUniqueId().toString() + " " + valueInt);
+                                //Above saves kills to file
+                            }
+
                         }
 
                     }
@@ -131,5 +137,15 @@ public class Wand implements Listener {
                 }
             }.runTaskTimer(plugin, 0, 1);
         }
+    }
+    /*
+       UUID1 3
+       UUID2 20
+       UUID3 22
+       Convert uuid to string, search for text ending at a space that matches the UUID, get the amount of kills in return
+        */
+    public static void loadPlayerData(UUID uuid) {
+      String key = uuid.toString();
+
     }
 }

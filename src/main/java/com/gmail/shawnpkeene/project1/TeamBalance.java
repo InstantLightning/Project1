@@ -44,7 +44,12 @@ public class TeamBalance {
         //Bukkit.broadcastMessage("Blue team has " + debug3 + "players");
     }
 
-
+    public static String getTeam(Player player) {
+        return teamScoreboard.getEntryTeam(player.getName()).getName();
+    }
+    public static  int getAmountPlayers(Player player) {
+        return teamScoreboard.getEntryTeam(player.getName()).getSize();
+    }
     public static void onLeaveGame(Player player) {
         teamScoreboard.getEntryTeam(player.getName()).removeEntry(player.getName());
         //Bukkit.broadcastMessage("onLeaveGame was called");

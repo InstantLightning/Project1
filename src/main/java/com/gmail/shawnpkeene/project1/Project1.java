@@ -24,9 +24,9 @@ public class Project1 extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new OnLeave(), this);
         Bukkit.getPluginManager().registerEvents(new Wand(), this);
         Bukkit.getPluginManager().registerEvents(new WandLeftClick(), this);
+        Bukkit.getPluginManager().registerEvents(new PlayerDeathInGame(), this);
         CustomRecipes items = new CustomRecipes(this);
         items.customRecipeNumberOne();
-        FileUtilities.test();
         getLogger().info("Project1 enabled");
 
     }
