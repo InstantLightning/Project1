@@ -1,13 +1,12 @@
+/*
+This was my second project and dealt with creating a scythe that destroys a radius of crops
+ */
 package com.gmail.shawnpkeene.project1;
 
-import net.minecraft.server.v1_12_R1.Entity;
-import net.minecraft.server.v1_12_R1.World;
-import net.minecraft.server.v1_12_R1.WorldServer;
 import org.bukkit.CropState;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
-import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

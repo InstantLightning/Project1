@@ -1,3 +1,6 @@
+/*
+This is an unfinished side project but deals with healing players with a bandage(not MineZ healing yet)
+ */
 package com.gmail.shawnpkeene.project1;
 
 import org.bukkit.Material;
@@ -17,10 +20,11 @@ public class Healing implements Listener {
     private HashMap<Material, Material> healBool = new HashMap<Material, Material>();
 
     @EventHandler
+    //This method also cancels all entitydamagebyentityevents on purpose
     public void onDamage(EntityDamageByEntityEvent event) {
         Entity entity = event.getEntity();
         Entity damagee = event.getDamager();
-        entity.sendMessage("Test");
+        //entity.sendMessage("Test");
 
         if (entity instanceof Player && damagee instanceof Player) {
             Player player = (Player) entity;
@@ -29,8 +33,8 @@ public class Healing implements Listener {
             if (mainHand.hasItemMeta() && mainHand.getItemMeta().getDisplayName().equals("Bandage")
                     && mainHand.getType() == Material.PAPER) {
                 player.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 200, 1));
-                event.setCancelled(true);
             }
         }
+        event.setCancelled(true);
     }
 }

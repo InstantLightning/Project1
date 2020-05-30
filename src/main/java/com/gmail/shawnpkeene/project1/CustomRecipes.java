@@ -1,3 +1,6 @@
+/*
+This class is a side project and does not relate to the main game. It tests my ability to make custom recipes
+ */
 package com.gmail.shawnpkeene.project1;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -13,6 +16,7 @@ public class CustomRecipes {
     }
 
     public void customRecipeNumberOne() {
+
         ItemStack item = new ItemStack(Material.BLAZE_POWDER);
         ShapedRecipe blazePowderTest = new ShapedRecipe(new NamespacedKey(plugin, "blaze_key") ,item);
         blazePowderTest.shape(" N ","N N"," N ");

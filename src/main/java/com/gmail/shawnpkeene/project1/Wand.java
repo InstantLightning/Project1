@@ -1,5 +1,10 @@
-package com.gmail.shawnpkeene.project1;
 
+/*
+This class is dealing with the wand a player gets when the game starts. It however only deals with when a player
+right clicks a wand
+ */
+
+package com.gmail.shawnpkeene.project1;
 import net.minecraft.server.v1_12_R1.AxisAlignedBB;
 import net.minecraft.server.v1_12_R1.EntityPlayer;
 import net.minecraft.server.v1_12_R1.EnumParticle;
@@ -18,7 +23,6 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -34,10 +38,10 @@ public class Wand implements Listener {
 
         Player player = event.getPlayer();
         ItemStack hand = player.getInventory().getItemInMainHand();
+
         if (hand == null || hand.getType() == Material.AIR) {
             return;
         }
-
         ItemMeta handMeta = hand.getItemMeta();
         Plugin plugin = Project1.getPlugin(Project1.class);
         float r = 1f;
@@ -49,6 +53,7 @@ public class Wand implements Listener {
             Location loc = player.getLocation();
             Vector direction = loc.getDirection().normalize();
             loc.add(0,1.5,0);
+            WandSounds wandSound = new WandSounds();
             COOLDOWN.put(player.getUniqueId(), 2);
             new BukkitRunnable() {
                 @Override
@@ -81,6 +86,7 @@ public class Wand implements Listener {
                                     0,
                                     100,
                                     (int[]) null);
+                    wandSound.wandRightClickSound(loc);
 
                     for (Player onlinePlayer: Bukkit.getOnlinePlayers()) {
 
@@ -95,7 +101,8 @@ public class Wand implements Listener {
                                 loc.getY() + RADIUS,
                                 loc.getZ() + RADIUS);
 
-                        if (playerBox.c(particleBox) && onlinePlayer != player) {
+                        if (playerBox.c(particleBox) && onlinePlayer != player && TeamBalance.getTeam(player) !=
+                                TeamBalance.getTeam(onlinePlayer)) {
                             //plugin.getServer().broadcastMessage("If statement in wand for loop worked");
                             onlinePlayer.setHealth(0.0);
                             onlinePlayer.spigot().respawn();

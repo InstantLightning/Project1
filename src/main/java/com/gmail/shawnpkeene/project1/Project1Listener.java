@@ -1,3 +1,6 @@
+/*
+This was my very first project which just changes the ground below the player to the item that they are holding
+ */
 package com.gmail.shawnpkeene.project1;
 import org.bukkit.Location;
 import org.bukkit.Material;

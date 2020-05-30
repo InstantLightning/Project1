@@ -1,3 +1,6 @@
+/*
+This class takes a player out of the game if they leave
+ */
 package com.gmail.shawnpkeene.project1;
 
 import org.bukkit.Location;
@@ -9,7 +12,6 @@ import org.bukkit.event.player.PlayerQuitEvent;
 public class OnLeave implements Listener {
     @EventHandler
     public void onLeave(PlayerQuitEvent event) {
-
         //Bukkit.broadcastMessage("That worked");
         Player player = event.getPlayer();
         Location loc = player.getLocation();

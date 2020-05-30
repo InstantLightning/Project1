@@ -1,3 +1,6 @@
+/*
+This class deals with the algorithm to decide what team a player will be on
+ */
 package com.gmail.shawnpkeene.project1;
 
 import org.bukkit.Bukkit;
@@ -26,8 +29,11 @@ public class TeamBalance {
 
         if (team.getSize() > team2.getSize()) {
             team2.addEntry(player.getName());
+            //Bukkit.broadcastMessage("Red team is bigger than blue team");
         } else if (team.getSize() == team2.getSize()) {
+            //Bukkit.broadcastMessage("Teams are equal sized");
             randomNumber = random.nextInt(2) + 1;
+            //Bukkit.broadcastMessage("Random number is " + randomNumber);
             String debug = String.valueOf(randomNumber);
             //Bukkit.broadcastMessage(debug);
             if (randomNumber == 2) {
@@ -35,8 +41,9 @@ public class TeamBalance {
             } else {
                 team2.addEntry(player.getName());
             }
-        } else {
+        } else if (team.getSize() < team2.getSize()) {
             team.addEntry(player.getName());
+            //Bukkit.broadcastMessage("Blue team is bigger than red team");
         }
         String debug2 = String.valueOf(team.getSize());
         String debug3 = String.valueOf(team2.getSize());

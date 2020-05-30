@@ -1,3 +1,6 @@
+/*
+This class deals with all file io for the game
+ */
 package com.gmail.shawnpkeene.project1;
 
 import java.io.*;
@@ -9,6 +12,7 @@ public class FileUtilities {
     }
 
     public static void saveToKillsFile(String kills) {
+
         File directory = getDataFolder();
 
         if (!directory.exists() && !directory.mkdirs()) {
@@ -31,6 +35,7 @@ public class FileUtilities {
     }
 
     public static int searchFileForKills(String key) throws IOException, NumberFormatException {
+
         File directory = getDataFolder();
         String temp;
         int kills = 0;

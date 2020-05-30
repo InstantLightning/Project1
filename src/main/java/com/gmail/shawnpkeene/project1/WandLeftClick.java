@@ -1,5 +1,8 @@
-package com.gmail.shawnpkeene.project1;
 
+/* This class deals with the wand when a player left clicks the wand. It creates a shield in front of the player.
+ */
+
+package com.gmail.shawnpkeene.project1;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -12,7 +15,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -65,6 +67,7 @@ public class WandLeftClick implements Listener {
         if (hand.getType() == Material.STICK && handMeta.getDisplayName().equals("Wand") &&
                 event.getAction() == Action.LEFT_CLICK_AIR && !COOLDOWN.containsKey(player.getUniqueId())) {
             COOLDOWN.put(player.getUniqueId(), 1);
+            WandSounds wandSounds = new WandSounds();
             new BukkitRunnable() {
                 @Override
                 public void run() {
@@ -82,84 +85,30 @@ public class WandLeftClick implements Listener {
 
                 for (int i = 0; i <= 1; ++i) {
                     //Blocks directly 3 blocks east of the player
-                    purpleBlock = purpleBlock.getRelative(3, i, 0);
-                    if (purpleBlock.getType() == Material.AIR) {
-                        BLOCKLOCATION.put(purpleBlock.getLocation(), purpleBlock);
-                        purpleBlock.setType(Material.STAINED_GLASS);
-                        purpleBlock.setData((byte) 10);
-                    }
-                    purpleBlock = blockLoc.getBlock();
-
+                    changeBlock(purpleBlock.getRelative(3, i, 0));
                     //Blocks directly 3 blocks west of the player
-                    purpleBlock = purpleBlock.getRelative(-3, i, 0);
-                    if (purpleBlock.getType() == Material.AIR) {
-                        BLOCKLOCATION.put(purpleBlock.getLocation(), purpleBlock);
-                        purpleBlock.setType(Material.STAINED_GLASS);
-                        purpleBlock.setData((byte) 10);
-                    }
-                    purpleBlock = blockLoc.getBlock();
+                    changeBlock(purpleBlock.getRelative(-3, i, 0));
                     //Blocks one north and 2 west of player
-                    purpleBlock = purpleBlock.getRelative(-2, i, -1);
-                    if (purpleBlock.getType() == Material.AIR) {
-                        BLOCKLOCATION.put(purpleBlock.getLocation(), purpleBlock);
-                        purpleBlock.setType(Material.STAINED_GLASS);
-                        purpleBlock.setData((byte) 10);
-                    }
-                    purpleBlock = blockLoc.getBlock();
+                     changeBlock(purpleBlock.getRelative(-2, i, -1));
                     //Blocks one north and 2 east of the player
-                    purpleBlock = purpleBlock.getRelative(2, i, -1);
-                    if (purpleBlock.getType() == Material.AIR) {
-                        BLOCKLOCATION.put(purpleBlock.getLocation(), purpleBlock);
-                        purpleBlock.setType(Material.STAINED_GLASS);
-                        purpleBlock.setData((byte) 10);
-                    }
-                    purpleBlock = blockLoc.getBlock();
+
+                    changeBlock(purpleBlock.getRelative(2, i, -1));
                     //Blocks 2x3 directly in front of player
                     for (int j = -1; j <= 1; ++j ) {
-
-                        purpleBlock = purpleBlock.getRelative(j, i, -2);
-                        if (purpleBlock.getType() == Material.AIR) {
-                            BLOCKLOCATION.put(purpleBlock.getLocation(), purpleBlock);
-                            purpleBlock.setType(Material.STAINED_GLASS);
-                            purpleBlock.setData((byte) 10);
-                        }
-                        purpleBlock = blockLoc.getBlock();
+                        changeBlock(purpleBlock.getRelative(j, i, -2));
                     }
                 }
                 //Blocks 1x3 directly on top of the player
                 for (int i = -1; i <= 1; ++i) {
-                    purpleBlock = purpleBlock.getRelative(i, 2, -1);
-                    if (purpleBlock.getType() == Material.AIR) {
-                        BLOCKLOCATION.put(purpleBlock.getLocation(), purpleBlock);
-                        purpleBlock.setType(Material.STAINED_GLASS);
-                        purpleBlock.setData((byte) 10);
-                    }
-                    purpleBlock = blockLoc.getBlock();
+                    changeBlock(purpleBlock.getRelative(i, 2, -1));
+                    changeBlock(purpleBlock.getRelative(i, 3, 0));
 
-                    purpleBlock = purpleBlock.getRelative(i, 3, 0);
-                    if (purpleBlock.getType() == Material.AIR) {
-                        BLOCKLOCATION.put(purpleBlock.getLocation(), purpleBlock);
-                        purpleBlock.setType(Material.STAINED_GLASS);
-                        purpleBlock.setData((byte) 10);
-                    }
-                    purpleBlock = blockLoc.getBlock();
                 }
                 //Corner to blocks
-                purpleBlock = purpleBlock.getRelative(2, 2, 0);
-                if (purpleBlock.getType() == Material.AIR) {
-                    BLOCKLOCATION.put(purpleBlock.getLocation(), purpleBlock);
-                    purpleBlock.setType(Material.STAINED_GLASS);
-                    purpleBlock.setData((byte) 10);
-                }
-                purpleBlock = blockLoc.getBlock();
 
-                purpleBlock = purpleBlock.getRelative(-2, 2, 0);
-                if (purpleBlock.getType() == Material.AIR) {
-                    BLOCKLOCATION.put(purpleBlock.getLocation(), purpleBlock);
-                    purpleBlock.setType(Material.STAINED_GLASS);
-                    purpleBlock.setData((byte) 10);
-                }
-                purpleBlock = blockLoc.getBlock();
+                changeBlock(purpleBlock.getRelative(2, 2, 0));
+                changeBlock(purpleBlock.getRelative(-2, 2, 0));
+                wandSounds.wandLeftClickSound(loc);
                 new BukkitRunnable() {
                     @Override
                     public void run() {
@@ -174,84 +123,26 @@ public class WandLeftClick implements Listener {
             if (east) {
                 for (int i = 0; i <= 1; ++i) {
                     //Blocks directly 3 blocks north of the player
-                    purpleBlock = purpleBlock.getRelative(0, i, 3);
-                    if (purpleBlock.getType() == Material.AIR) {
-                        BLOCKLOCATION.put(purpleBlock.getLocation(), purpleBlock);
-                        purpleBlock.setType(Material.STAINED_GLASS);
-                        purpleBlock.setData((byte) 10);
-                    }
-                    purpleBlock = blockLoc.getBlock();
-
+                   changeBlock(purpleBlock.getRelative(0, i, 3));
                     //Blocks directly 3 blocks south of the player
-                    purpleBlock = purpleBlock.getRelative(0, i, -3);
-                    if (purpleBlock.getType() == Material.AIR) {
-                        BLOCKLOCATION.put(purpleBlock.getLocation(), purpleBlock);
-                        purpleBlock.setType(Material.STAINED_GLASS);
-                        purpleBlock.setData((byte) 10);
-                    }
-                    purpleBlock = blockLoc.getBlock();
+                   changeBlock(purpleBlock.getRelative(0, i, -3));
                     //Blocks one east and 2 south of player
-                    purpleBlock = purpleBlock.getRelative(1, i, 2);
-                    if (purpleBlock.getType() == Material.AIR) {
-                        BLOCKLOCATION.put(purpleBlock.getLocation(), purpleBlock);
-                        purpleBlock.setType(Material.STAINED_GLASS);
-                        purpleBlock.setData((byte) 10);
-                    }
-                    purpleBlock = blockLoc.getBlock();
+                   changeBlock(purpleBlock.getRelative(1, i, 2));
                     //Blocks one east and 2 north of the player
-                    purpleBlock = purpleBlock.getRelative(1, i, -2);
-                    if (purpleBlock.getType() == Material.AIR) {
-                        BLOCKLOCATION.put(purpleBlock.getLocation(), purpleBlock);
-                        purpleBlock.setType(Material.STAINED_GLASS);
-                        purpleBlock.setData((byte) 10);
-                    }
-                    purpleBlock = blockLoc.getBlock();
-                    //Blocks 2x3 directly in front of player
+                   changeBlock(purpleBlock.getRelative(1, i, -2));
                     for (int j = -1; j <= 1; ++j ) {
-
-                        purpleBlock = purpleBlock.getRelative(2, i, j);
-                        if (purpleBlock.getType() == Material.AIR) {
-                            BLOCKLOCATION.put(purpleBlock.getLocation(), purpleBlock);
-                            purpleBlock.setType(Material.STAINED_GLASS);
-                            purpleBlock.setData((byte) 10);
-                        }
-                        purpleBlock = blockLoc.getBlock();
+                        changeBlock(purpleBlock.getRelative(2, i, j));
                     }
                 }
                 //Blocks 1x3 directly on top of the player
                 for (int i = -1; i <= 1; ++i) {
-                    purpleBlock = purpleBlock.getRelative(1, 2, i);
-                    if (purpleBlock.getType() == Material.AIR) {
-                        BLOCKLOCATION.put(purpleBlock.getLocation(), purpleBlock);
-                        purpleBlock.setType(Material.STAINED_GLASS);
-                        purpleBlock.setData((byte) 10);
-                    }
-                    purpleBlock = blockLoc.getBlock();
-
-                    purpleBlock = purpleBlock.getRelative(0, 3, i);
-                    if (purpleBlock.getType() == Material.AIR) {
-                        BLOCKLOCATION.put(purpleBlock.getLocation(), purpleBlock);
-                        purpleBlock.setType(Material.STAINED_GLASS);
-                        purpleBlock.setData((byte) 10);
-                    }
-                    purpleBlock = blockLoc.getBlock();
+                   changeBlock(purpleBlock.getRelative(1, 2, i));
+                   changeBlock(purpleBlock.getRelative(0, 3, i));
                 }
                 //Corner to blocks
-                purpleBlock = purpleBlock.getRelative(0, 2, 2);
-                if (purpleBlock.getType() == Material.AIR) {
-                    BLOCKLOCATION.put(purpleBlock.getLocation(), purpleBlock);
-                    purpleBlock.setType(Material.STAINED_GLASS);
-                    purpleBlock.setData((byte) 10);
-                }
-                purpleBlock = blockLoc.getBlock();
-
-                purpleBlock = purpleBlock.getRelative(0, 2, -2);
-                if (purpleBlock.getType() == Material.AIR) {
-                    BLOCKLOCATION.put(purpleBlock.getLocation(), purpleBlock);
-                    purpleBlock.setType(Material.STAINED_GLASS);
-                    purpleBlock.setData((byte) 10);
-                }
-                purpleBlock = blockLoc.getBlock();
+                changeBlock(purpleBlock.getRelative(0, 2, 2));
+                changeBlock(purpleBlock.getRelative(0, 2, -2));
+                wandSounds.wandLeftClickSound(loc);
                 new BukkitRunnable() {
                     @Override
                     public void run() {
@@ -266,84 +157,27 @@ public class WandLeftClick implements Listener {
             if (west) {
                 for (int i = 0; i <= 1; ++i) {
                     //Blocks directly 3 blocks north of the player
-                    purpleBlock = purpleBlock.getRelative(0, i, 3);
-                    if (purpleBlock.getType() == Material.AIR) {
-                        BLOCKLOCATION.put(purpleBlock.getLocation(), purpleBlock);
-                        purpleBlock.setType(Material.STAINED_GLASS);
-                        purpleBlock.setData((byte) 10);
-                    }
-                    purpleBlock = blockLoc.getBlock();
-
+                    changeBlock(purpleBlock.getRelative(0, i, 3));
                     //Blocks directly 3 blocks south of the player
-                    purpleBlock = purpleBlock.getRelative(0, i, -3);
-                    if (purpleBlock.getType() == Material.AIR) {
-                        BLOCKLOCATION.put(purpleBlock.getLocation(), purpleBlock);
-                        purpleBlock.setType(Material.STAINED_GLASS);
-                        purpleBlock.setData((byte) 10);
-                    }
-                    purpleBlock = blockLoc.getBlock();
+                    changeBlock(purpleBlock.getRelative(0, i, -3));
                     //Blocks one west and 2 south of player
-                    purpleBlock = purpleBlock.getRelative(-1, i, 2);
-                    if (purpleBlock.getType() == Material.AIR) {
-                        BLOCKLOCATION.put(purpleBlock.getLocation(), purpleBlock);
-                        purpleBlock.setType(Material.STAINED_GLASS);
-                        purpleBlock.setData((byte) 10);
-                    }
-                    purpleBlock = blockLoc.getBlock();
+                    changeBlock(purpleBlock.getRelative(-1, i, 2));
                     //Blocks one west and 2 north of the player
-                    purpleBlock = purpleBlock.getRelative(-1, i, -2);
-                    if (purpleBlock.getType() == Material.AIR) {
-                        BLOCKLOCATION.put(purpleBlock.getLocation(), purpleBlock);
-                        purpleBlock.setType(Material.STAINED_GLASS);
-                        purpleBlock.setData((byte) 10);
-                    }
-                    purpleBlock = blockLoc.getBlock();
+                    changeBlock(purpleBlock.getRelative(-1, i, -2));
                     //Blocks 2x3 directly in front of player
                     for (int j = -1; j <= 1; ++j ) {
-
-                        purpleBlock = purpleBlock.getRelative(-2, i, j);
-                        if (purpleBlock.getType() == Material.AIR) {
-                            BLOCKLOCATION.put(purpleBlock.getLocation(), purpleBlock);
-                            purpleBlock.setType(Material.STAINED_GLASS);
-                            purpleBlock.setData((byte) 10);
-                        }
-                        purpleBlock = blockLoc.getBlock();
+                       changeBlock(purpleBlock.getRelative(-2, i, j));
                     }
                 }
                 //Blocks 1x3 directly on top of the player
                 for (int i = -1; i <= 1; ++i) {
-                    purpleBlock = purpleBlock.getRelative(-1, 2, i);
-                    if (purpleBlock.getType() == Material.AIR) {
-                        BLOCKLOCATION.put(purpleBlock.getLocation(), purpleBlock);
-                        purpleBlock.setType(Material.STAINED_GLASS);
-                        purpleBlock.setData((byte) 10);
-                    }
-                    purpleBlock = blockLoc.getBlock();
-
-                    purpleBlock = purpleBlock.getRelative(0, 3, i);
-                    if (purpleBlock.getType() == Material.AIR) {
-                        BLOCKLOCATION.put(purpleBlock.getLocation(), purpleBlock);
-                        purpleBlock.setType(Material.STAINED_GLASS);
-                        purpleBlock.setData((byte) 10);
-                    }
-                    purpleBlock = blockLoc.getBlock();
+                    changeBlock(purpleBlock.getRelative(-1, 2, i));
+                    changeBlock(purpleBlock.getRelative(0, 3, i));
                 }
                 //Corner to blocks
-                purpleBlock = purpleBlock.getRelative(0, 2, 2);
-                if (purpleBlock.getType() == Material.AIR) {
-                    BLOCKLOCATION.put(purpleBlock.getLocation(), purpleBlock);
-                    purpleBlock.setType(Material.STAINED_GLASS);
-                    purpleBlock.setData((byte) 10);
-                }
-                purpleBlock = blockLoc.getBlock();
-
-                purpleBlock = purpleBlock.getRelative(0, 2, -2);
-                if (purpleBlock.getType() == Material.AIR) {
-                    BLOCKLOCATION.put(purpleBlock.getLocation(), purpleBlock);
-                    purpleBlock.setType(Material.STAINED_GLASS);
-                    purpleBlock.setData((byte) 10);
-                }
-                purpleBlock = blockLoc.getBlock();
+                changeBlock(purpleBlock.getRelative(0, 2, 2));
+                changeBlock(purpleBlock.getRelative(0, 2, -2));
+                wandSounds.wandLeftClickSound(loc);
                 new BukkitRunnable() {
                     @Override
                     public void run() {
@@ -356,84 +190,27 @@ public class WandLeftClick implements Listener {
             if (south) {
                 for (int i = 0; i <= 1; ++i) {
                     //Blocks directly 3 blocks east of the player
-                    purpleBlock = purpleBlock.getRelative(3, i, 0);
-                    if (purpleBlock.getType() == Material.AIR) {
-                        BLOCKLOCATION.put(purpleBlock.getLocation(), purpleBlock);
-                        purpleBlock.setType(Material.STAINED_GLASS);
-                        purpleBlock.setData((byte) 10);
-                    }
-                    purpleBlock = blockLoc.getBlock();
-
+                   changeBlock(purpleBlock.getRelative(3, i, 0));
                     //Blocks directly 3 blocks west of the player
-                    purpleBlock = purpleBlock.getRelative(-3, i, 0);
-                    if (purpleBlock.getType() == Material.AIR) {
-                        BLOCKLOCATION.put(purpleBlock.getLocation(), purpleBlock);
-                        purpleBlock.setType(Material.STAINED_GLASS);
-                        purpleBlock.setData((byte) 10);
-                    }
-                    purpleBlock = blockLoc.getBlock();
+                    changeBlock(purpleBlock.getRelative(-3, i, 0));
                     //Blocks one south and 2 west of player
-                    purpleBlock = purpleBlock.getRelative(-2, i, 1);
-                    if (purpleBlock.getType() == Material.AIR) {
-                        BLOCKLOCATION.put(purpleBlock.getLocation(), purpleBlock);
-                        purpleBlock.setType(Material.STAINED_GLASS);
-                        purpleBlock.setData((byte) 10);
-                    }
-                    purpleBlock = blockLoc.getBlock();
+                   changeBlock(purpleBlock.getRelative(-2, i, 1));
                     //Blocks one south and 2 east of the player
-                    purpleBlock = purpleBlock.getRelative(2, i, 1);
-                    if (purpleBlock.getType() == Material.AIR) {
-                        BLOCKLOCATION.put(purpleBlock.getLocation(), purpleBlock);
-                        purpleBlock.setType(Material.STAINED_GLASS);
-                        purpleBlock.setData((byte) 10);
-                    }
-                    purpleBlock = blockLoc.getBlock();
+                    changeBlock(purpleBlock.getRelative(2, i, 1));
                     //Blocks 2x3 directly in front of player
                     for (int j = -1; j <= 1; ++j ) {
-
-                        purpleBlock = purpleBlock.getRelative(j, i, 2);
-                        if (purpleBlock.getType() == Material.AIR) {
-                            BLOCKLOCATION.put(purpleBlock.getLocation(), purpleBlock);
-                            purpleBlock.setType(Material.STAINED_GLASS);
-                            purpleBlock.setData((byte) 10);
-                        }
-                        purpleBlock = blockLoc.getBlock();
+                        changeBlock(purpleBlock.getRelative(j, i, 2));
                     }
                 }
                 //Blocks 1x3 directly on top of the player
                 for (int i = -1; i <= 1; ++i) {
-                    purpleBlock = purpleBlock.getRelative(i, 2, 1);
-                    if (purpleBlock.getType() == Material.AIR) {
-                        BLOCKLOCATION.put(purpleBlock.getLocation(), purpleBlock);
-                        purpleBlock.setType(Material.STAINED_GLASS);
-                        purpleBlock.setData((byte) 10);
-                    }
-                    purpleBlock = blockLoc.getBlock();
-
-                    purpleBlock = purpleBlock.getRelative(i, 3, 0);
-                    if (purpleBlock.getType() == Material.AIR) {
-                        BLOCKLOCATION.put(purpleBlock.getLocation(), purpleBlock);
-                        purpleBlock.setType(Material.STAINED_GLASS);
-                        purpleBlock.setData((byte) 10);
-                    }
-                    purpleBlock = blockLoc.getBlock();
+                    changeBlock(purpleBlock.getRelative(i, 2, 1));
+                    changeBlock(purpleBlock.getRelative(i, 3, 0));
                 }
                 //Corner to blocks
-                purpleBlock = purpleBlock.getRelative(2, 2, 0);
-                if (purpleBlock.getType() == Material.AIR) {
-                    BLOCKLOCATION.put(purpleBlock.getLocation(), purpleBlock);
-                    purpleBlock.setType(Material.STAINED_GLASS);
-                    purpleBlock.setData((byte) 10);
-                }
-                purpleBlock = blockLoc.getBlock();
-
-                purpleBlock = purpleBlock.getRelative(-2, 2, 0);
-                if (purpleBlock.getType() == Material.AIR) {
-                    BLOCKLOCATION.put(purpleBlock.getLocation(), purpleBlock);
-                    purpleBlock.setType(Material.STAINED_GLASS);
-                    purpleBlock.setData((byte) 10);
-                }
-                purpleBlock = blockLoc.getBlock();
+                changeBlock(purpleBlock.getRelative(2, 2, 0));
+                changeBlock(purpleBlock.getRelative(-2, 2, 0));
+                wandSounds.wandLeftClickSound(loc);
                 new BukkitRunnable() {
                     @Override
                     public void run() {
@@ -444,6 +221,14 @@ public class WandLeftClick implements Listener {
                 }.runTaskLater(plugin, 5);
 
             }
+        }
+    }
+
+    public static void changeBlock(Block purpleBlock){
+        if (purpleBlock.getType() == Material.AIR) {
+            BLOCKLOCATION.put(purpleBlock.getLocation(), purpleBlock);
+            purpleBlock.setType(Material.STAINED_GLASS);
+            purpleBlock.setData((byte) 10);
         }
     }
 }

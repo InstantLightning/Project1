@@ -1,3 +1,6 @@
+/*
+This class deals with the gui for the game
+ */
 package com.gmail.shawnpkeene.project1;
 
 import org.bukkit.Bukkit;
@@ -9,6 +12,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 public class InventoryCommands {
     public void newGUI(Player player) {
+
         Inventory gui = Bukkit.createInventory(null, 9, "Sharks and Minnows Games");
         JoinVillager amountOfPlayers = new JoinVillager();
 

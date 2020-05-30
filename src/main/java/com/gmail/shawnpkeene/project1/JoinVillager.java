@@ -1,5 +1,7 @@
+/*
+This class deals with the join villager and the items within the gui to teleport the player to the arena
+ */
 package com.gmail.shawnpkeene.project1;
-
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Entity;
@@ -20,9 +22,11 @@ public class JoinVillager implements Listener {
 
     @EventHandler
     public void villager(PlayerInteractEntityEvent event) {
+
         Entity entity = event.getRightClicked();
         Player player = event.getPlayer();
         InventoryCommands inventory = new InventoryCommands();
+
         if (entity instanceof Villager) {
             event.setCancelled(true);
             inventory.newGUI(player);
@@ -34,6 +38,7 @@ public class JoinVillager implements Listener {
 
     @EventHandler
     public void clickInventory(InventoryClickEvent event) {
+
         Player player = (Player) event.getWhoClicked();
         Location loc = new Location(player.getWorld(), 558.8D, 5D, -570.5D);
         Inventory gui = event.getClickedInventory();
@@ -44,7 +49,6 @@ public class JoinVillager implements Listener {
 
         if (gui.getName().equals("Sharks and Minnows Games")) {
             if (event.getCurrentItem().getType() == Material.ENDER_PEARL){
-                TeamBalance.teamBalance(player);
                 player.teleport(loc);
                 setPlayersInZone(1);
             }
@@ -52,19 +56,6 @@ public class JoinVillager implements Listener {
         }
     }
 
-    /*@EventHandler
-    public void playerInZone (PlayerTeleportEvent event) {
-        Player player = event.getPlayer();
-        player.sendMessage("playerInZone called");
-        Location loc = player.getLocation();
-        if(loc.getBlockZ() > -572 && loc.getBlockZ() < -548 && loc.getBlockX() < 578 && loc.getBlockX() > 542) {
-            setPlayersInZone(1);
-        }
-        else{
-            player.sendMessage("Location failed");
-            setPlayersInZone(-1);
-        }
-    } */
     public void setPlayersInZone(int i) {
 
         GameStart game = new GameStart();

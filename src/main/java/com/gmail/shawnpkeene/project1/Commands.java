@@ -1,3 +1,6 @@
+/*
+This class deals with the commands of the game
+ */
 package com.gmail.shawnpkeene.project1;
 
 import org.bukkit.ChatColor;
@@ -23,6 +26,7 @@ public class Commands implements Listener, CommandExecutor {
         if (gamemode.getName().equalsIgnoreCase(LOBBY)) {
             Location loc = new Location(((Player) sender).getWorld(),566.5f, 4, -535.5f);
             player.teleport(loc);
+            player.getInventory().clear();
             JoinVillager villager = new JoinVillager();
             team.onLeaveGame(player);
             villager.setPlayersInZone(-1);
