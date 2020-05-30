@@ -31,6 +31,7 @@ public class WandLeftClick implements Listener {
         boolean east = false;
         boolean south = false;
         boolean west = false;
+        int posNeg = 1;
         Location loc = player.getLocation();
         Location blockLoc = loc;
         Block purpleBlock = blockLoc.getBlock();
@@ -81,26 +82,30 @@ public class WandLeftClick implements Listener {
                 }
             }.runTaskTimer(plugin, 0, 20);
 
-            if (north) {
-
+            if (north || south) {
+                if (north) {
+                    posNeg = -1;
+                }else if (south) {
+                    posNeg = 1;
+                }
                 for (int i = 0; i <= 1; ++i) {
                     //Blocks directly 3 blocks east of the player
                     changeBlock(purpleBlock.getRelative(3, i, 0));
                     //Blocks directly 3 blocks west of the player
                     changeBlock(purpleBlock.getRelative(-3, i, 0));
                     //Blocks one north and 2 west of player
-                     changeBlock(purpleBlock.getRelative(-2, i, -1));
+                    changeBlock(purpleBlock.getRelative(-2, i, posNeg * 1));
                     //Blocks one north and 2 east of the player
 
-                    changeBlock(purpleBlock.getRelative(2, i, -1));
+                    changeBlock(purpleBlock.getRelative(2, i, posNeg * 1));
                     //Blocks 2x3 directly in front of player
                     for (int j = -1; j <= 1; ++j ) {
-                        changeBlock(purpleBlock.getRelative(j, i, -2));
+                        changeBlock(purpleBlock.getRelative(j, i, posNeg * 2));
                     }
                 }
                 //Blocks 1x3 directly on top of the player
                 for (int i = -1; i <= 1; ++i) {
-                    changeBlock(purpleBlock.getRelative(i, 2, -1));
+                    changeBlock(purpleBlock.getRelative(i, 2, posNeg * 1));
                     changeBlock(purpleBlock.getRelative(i, 3, 0));
 
                 }
@@ -120,96 +125,33 @@ public class WandLeftClick implements Listener {
 
             }
 
-            if (east) {
+            if (east || west) {
+                if (east) {
+                    posNeg = 1;
+                } else if (west) {
+                    posNeg = -1;
+                }
                 for (int i = 0; i <= 1; ++i) {
                     //Blocks directly 3 blocks north of the player
                    changeBlock(purpleBlock.getRelative(0, i, 3));
                     //Blocks directly 3 blocks south of the player
                    changeBlock(purpleBlock.getRelative(0, i, -3));
                     //Blocks one east and 2 south of player
-                   changeBlock(purpleBlock.getRelative(1, i, 2));
+                   changeBlock(purpleBlock.getRelative(posNeg * 1, i, 2));
                     //Blocks one east and 2 north of the player
-                   changeBlock(purpleBlock.getRelative(1, i, -2));
+                   changeBlock(purpleBlock.getRelative(posNeg * 1, i, -2));
                     for (int j = -1; j <= 1; ++j ) {
-                        changeBlock(purpleBlock.getRelative(2, i, j));
+                        changeBlock(purpleBlock.getRelative(posNeg * 2, i, j));
                     }
                 }
                 //Blocks 1x3 directly on top of the player
                 for (int i = -1; i <= 1; ++i) {
-                   changeBlock(purpleBlock.getRelative(1, 2, i));
+                   changeBlock(purpleBlock.getRelative(posNeg * 1, 2, i));
                    changeBlock(purpleBlock.getRelative(0, 3, i));
                 }
                 //Corner to blocks
                 changeBlock(purpleBlock.getRelative(0, 2, 2));
                 changeBlock(purpleBlock.getRelative(0, 2, -2));
-                wandSounds.wandLeftClickSound(loc);
-                new BukkitRunnable() {
-                    @Override
-                    public void run() {
-                        for (Map.Entry<Location, Block> entry: BLOCKLOCATION.entrySet()) {
-                            entry.getKey().getBlock().setType(Material.AIR);
-                        }
-                    }
-                }.runTaskLater(plugin, 5);
-
-            }
-
-            if (west) {
-                for (int i = 0; i <= 1; ++i) {
-                    //Blocks directly 3 blocks north of the player
-                    changeBlock(purpleBlock.getRelative(0, i, 3));
-                    //Blocks directly 3 blocks south of the player
-                    changeBlock(purpleBlock.getRelative(0, i, -3));
-                    //Blocks one west and 2 south of player
-                    changeBlock(purpleBlock.getRelative(-1, i, 2));
-                    //Blocks one west and 2 north of the player
-                    changeBlock(purpleBlock.getRelative(-1, i, -2));
-                    //Blocks 2x3 directly in front of player
-                    for (int j = -1; j <= 1; ++j ) {
-                       changeBlock(purpleBlock.getRelative(-2, i, j));
-                    }
-                }
-                //Blocks 1x3 directly on top of the player
-                for (int i = -1; i <= 1; ++i) {
-                    changeBlock(purpleBlock.getRelative(-1, 2, i));
-                    changeBlock(purpleBlock.getRelative(0, 3, i));
-                }
-                //Corner to blocks
-                changeBlock(purpleBlock.getRelative(0, 2, 2));
-                changeBlock(purpleBlock.getRelative(0, 2, -2));
-                wandSounds.wandLeftClickSound(loc);
-                new BukkitRunnable() {
-                    @Override
-                    public void run() {
-                        for (Map.Entry<Location, Block> entry: BLOCKLOCATION.entrySet()) {
-                            entry.getKey().getBlock().setType(Material.AIR);
-                        }
-                    }
-                }.runTaskLater(plugin, 5);
-            }
-            if (south) {
-                for (int i = 0; i <= 1; ++i) {
-                    //Blocks directly 3 blocks east of the player
-                   changeBlock(purpleBlock.getRelative(3, i, 0));
-                    //Blocks directly 3 blocks west of the player
-                    changeBlock(purpleBlock.getRelative(-3, i, 0));
-                    //Blocks one south and 2 west of player
-                   changeBlock(purpleBlock.getRelative(-2, i, 1));
-                    //Blocks one south and 2 east of the player
-                    changeBlock(purpleBlock.getRelative(2, i, 1));
-                    //Blocks 2x3 directly in front of player
-                    for (int j = -1; j <= 1; ++j ) {
-                        changeBlock(purpleBlock.getRelative(j, i, 2));
-                    }
-                }
-                //Blocks 1x3 directly on top of the player
-                for (int i = -1; i <= 1; ++i) {
-                    changeBlock(purpleBlock.getRelative(i, 2, 1));
-                    changeBlock(purpleBlock.getRelative(i, 3, 0));
-                }
-                //Corner to blocks
-                changeBlock(purpleBlock.getRelative(2, 2, 0));
-                changeBlock(purpleBlock.getRelative(-2, 2, 0));
                 wandSounds.wandLeftClickSound(loc);
                 new BukkitRunnable() {
                     @Override

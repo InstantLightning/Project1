@@ -112,7 +112,7 @@ public class Wand implements Listener {
                             plugin.getServer().broadcastMessage("Player has " + valueInt + " kills");
 
                             if (onlinePlayer.getHealth() == 0.0) {
-                                FileUtilities.saveToKillsFile(onlinePlayer.getUniqueId().toString() + " " + valueInt);
+                                FileUtilities.saveToKillsFile(onlinePlayer.getUniqueId().toString(), valueInt);
                                 //Above saves kills to file
                             }
 
@@ -153,6 +153,6 @@ public class Wand implements Listener {
         */
     public static void loadPlayerData(UUID uuid) {
       String key = uuid.toString();
-
+      FileUtilities.searchFileForKills(key);
     }
 }
