@@ -113,4 +113,23 @@ public class ArenaCoordinates {
         return arrayCoordinates;
     }
 
+    public int[] getBlueTeamCoordinates() {
+        int [] arrayCoordinates = {blueX, blueY, blueZ};
+        return arrayCoordinates;
+    }
+
+    public int[] getRedTeamCoordinates() {
+        int[] arrayCoordinates = {redX, redY, redZ};
+        return arrayCoordinates;
+    }
+
+    public int[] getLobbyCoordinates() {
+        int[] arrayCoordinates = {lobX, lobY, lobZ};
+        return arrayCoordinates;
+    }
+
+    public int[] getGameLobbyCoordinates() {
+        int[] arrayCoordinates = {gameLobX, gameLobY, gameLobZ};
+        return arrayCoordinates;
+    }
 }
