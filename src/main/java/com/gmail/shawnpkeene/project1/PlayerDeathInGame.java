@@ -47,8 +47,8 @@ public class PlayerDeathInGame implements Listener {
                     game.runTaskTimer(plugin, 0, 20);
                     for (Player player2: Bukkit.getOnlinePlayers()) {
 
-                        if (TeamBalance.getTeam(player).equalsIgnoreCase("Red Team") ||
-                                TeamBalance.getTeam(player).equalsIgnoreCase("Blue Team")) {
+                        if (TeamBalance.getTeam(player2).equalsIgnoreCase("Red Team") ||
+                                TeamBalance.getTeam(player2).equalsIgnoreCase("Blue Team")) {
                             TeamBalance.onLeaveGame(player2);
                         }
                     }
@@ -73,8 +73,8 @@ public class PlayerDeathInGame implements Listener {
                     game.runTaskTimer(plugin, 0, 20);
                     for (Player player2: Bukkit.getOnlinePlayers()) {
 
-                        if (TeamBalance.getTeam(player).equalsIgnoreCase("Red Team") ||
-                                TeamBalance.getTeam(player).equalsIgnoreCase("Blue Team")) {
+                        if (TeamBalance.getTeam(player2).equalsIgnoreCase("Red Team") ||
+                                TeamBalance.getTeam(player2).equalsIgnoreCase("Blue Team")) {
                             TeamBalance.onLeaveGame(player2);
                         }
                     }

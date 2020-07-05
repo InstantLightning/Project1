@@ -29,7 +29,7 @@ public class GameStart extends BukkitRunnable {
                 Location loc = player.getLocation();
                 Location location = new Location(player.getWorld(), 544f, 4f, -558f);
                 Location location2 = new Location(player.getWorld(), 576f, 4f, -558f);
-
+                //542 x1, 578 x2, -573 z1, -548 z2
                 if (loc.getBlockZ() > -573 && loc.getBlockZ() < -548 && loc.getBlockX() < 578 && loc.getBlockX() > 542) {
                     //Bukkit.broadcastMessage("if statement in for loop ran");
                     String string = String.valueOf(counter);

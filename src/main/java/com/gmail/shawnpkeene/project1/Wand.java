@@ -1,7 +1,8 @@
 
 /*
 This class is dealing with the wand a player gets when the game starts. It however only deals with when a player
-right clicks a wand
+right clicks a wand. Shows that I can do nms. I do know that I can make particles better on spigot to further optimize
+it.
  */
 
 package com.gmail.shawnpkeene.project1;
@@ -18,11 +19,14 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
+
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -32,6 +36,18 @@ public class Wand implements Listener {
     private static final double RADIUS = 1.0D;
     private static final Map<UUID, Integer> KILLS = new HashMap<>();
     private static final Map<UUID, Integer> COOLDOWN = new HashMap<>();
+
+    @EventHandler
+    public void onJoin2(PlayerJoinEvent event) {
+        Player player = event.getPlayer();
+        int kills = 0;
+        try {
+            kills = FileUtilities.searchFileForKills(player.getUniqueId().toString());
+        }catch (IOException e) {
+            e.printStackTrace();
+        }
+        KILLS.put(player.getUniqueId(), kills);
+    }
 
     @EventHandler
     public void wand(PlayerInteractEvent event) {
@@ -111,10 +127,14 @@ public class Wand implements Listener {
                             String valueInt = String.valueOf(KILLS.get(player.getUniqueId()));
                             plugin.getServer().broadcastMessage("Player has " + valueInt + " kills");
 
-                            if (onlinePlayer.getHealth() == 0.0) {
+                            try {
+                                Bukkit.broadcastMessage("saveToKillsFile is called");
                                 FileUtilities.saveToKillsFile(onlinePlayer.getUniqueId().toString(), valueInt);
                                 //Above saves kills to file
+                            }catch (IOException e) {
+                                e.printStackTrace();
                             }
+
 
                         }
 
@@ -151,8 +171,12 @@ public class Wand implements Listener {
        UUID3 22
        Convert uuid to string, search for text ending at a space that matches the UUID, get the amount of kills in return
         */
-    public static void loadPlayerData(UUID uuid) {
-      String key = uuid.toString();
-      FileUtilities.searchFileForKills(key);
-    }
+//    public static void loadPlayerData(UUID uuid) {
+//      String key = uuid.toString();
+//      try {
+//          FileUtilities.searchFileForKills(key);
+//      }catch (IOException e) {
+//          e.printStackTrace();
+//      }
+//    }
 }
