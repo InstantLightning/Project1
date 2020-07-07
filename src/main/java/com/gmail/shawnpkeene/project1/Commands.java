@@ -24,7 +24,9 @@ public class Commands implements Listener, CommandExecutor {
 
         //LOBBY command
         if (gamemode.getName().equalsIgnoreCase(LOBBY)) {
-            Location loc = new Location(((Player) sender).getWorld(),566.5f, 4, -535.5f);
+            ArenaCoordinates coordinates = new ArenaCoordinates();
+            int[] lobbyLoc = coordinates.getLobbyCoordinates();
+            Location loc = new Location(((Player) sender).getWorld(),lobbyLoc[0], lobbyLoc[1], lobbyLoc[2]);
             player.teleport(loc);
             player.getInventory().clear();
             JoinVillager villager = new JoinVillager();

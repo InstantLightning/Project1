@@ -83,52 +83,58 @@ public class ArenaCoordinates {
             JSONParser parser = new JSONParser();
             JSONObject json = (JSONObject)parser.parse(jsonText);
             worldName = (String)json.get("worldName");
-            x1 = (int)json.get("x1");
-            x2 = (int)json.get("x2");
-            z1 = (int)json.get("z1");
-            z2 = (int)json.get("z2");
-            blueX = (int)json.get(blueX);
-            blueY = (int)json.get(blueY);
-            blueZ = (int)json.get(blueZ);
-            redX = (int)json.get(redX);
-            redY = (int)json.get(redY);
-            redZ = (int)json.get(redZ);
-            lobX = (int)json.get(lobX);
-            lobY = (int)json.get(lobY);
-            lobZ = (int)json.get(lobZ);
-            gameLobX = (int)json.get(gameLobX);
-            gameLobY = (int)json.get(gameLobY);
-            gameLobZ = (int)json.get(gameLobZ);
+            x1 = ((Long)json.get("x1")).intValue();
+            x2 = ((Long)json.get("x2")).intValue();
+            z1 = ((Long)json.get("z1")).intValue();
+            z2 = ((Long)json.get("z2")).intValue();
+            blueX = ((Long)json.get("blueX")).intValue();
+            blueY = ((Long)json.get("blueY")).intValue();
+            blueZ = ((Long)json.get("blueZ")).intValue();
+            redX = ((Long)json.get("redX")).intValue();
+            redY = ((Long)json.get("redY")).intValue();
+            redZ = ((Long)json.get("redZ")).intValue();
+            lobX = ((Long)json.get("lobX")).intValue();
+            lobY = ((Long)json.get("lobY")).intValue();
+            lobZ = ((Long)json.get("lobZ")).intValue();
+            gameLobX = ((Long)json.get("gameLobX")).intValue();
+            gameLobY = ((Long)json.get("gameLobY")).intValue();
+            gameLobZ = ((Long)json.get("gameLobZ")).intValue();
         } catch (IOException | ParseException e) {
             e.printStackTrace();
         }
     }
 
     public String getWorldName() {
+        fromJson();
         return worldName;
     }
 
     public int[] getArenaCoordinates() {
+        fromJson();
         int[] arrayCoordinates = {x1, x2, z1, z2};
         return arrayCoordinates;
     }
 
     public int[] getBlueTeamCoordinates() {
+        fromJson();
         int [] arrayCoordinates = {blueX, blueY, blueZ};
         return arrayCoordinates;
     }
 
     public int[] getRedTeamCoordinates() {
+        fromJson();
         int[] arrayCoordinates = {redX, redY, redZ};
         return arrayCoordinates;
     }
 
     public int[] getLobbyCoordinates() {
+        fromJson();
         int[] arrayCoordinates = {lobX, lobY, lobZ};
         return arrayCoordinates;
     }
 
     public int[] getGameLobbyCoordinates() {
+        fromJson();
         int[] arrayCoordinates = {gameLobX, gameLobY, gameLobZ};
         return arrayCoordinates;
     }

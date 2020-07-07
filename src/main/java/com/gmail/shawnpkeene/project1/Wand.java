@@ -26,7 +26,6 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -37,15 +36,13 @@ public class Wand implements Listener {
     private static final Map<UUID, Integer> KILLS = new HashMap<>();
     private static final Map<UUID, Integer> COOLDOWN = new HashMap<>();
 
+
     @EventHandler
     public void onJoin2(PlayerJoinEvent event) {
+        KillsFile killsFile = new KillsFile();
         Player player = event.getPlayer();
         int kills = 0;
-        try {
-            kills = FileUtilities.searchFileForKills(player.getUniqueId().toString());
-        }catch (IOException e) {
-            e.printStackTrace();
-        }
+        kills = killsFile.fromJson(player.getUniqueId().toString());
         KILLS.put(player.getUniqueId(), kills);
     }
 
@@ -54,6 +51,7 @@ public class Wand implements Listener {
 
         Player player = event.getPlayer();
         ItemStack hand = player.getInventory().getItemInMainHand();
+        KillsFile killsFile = new KillsFile();
 
         if (hand == null || hand.getType() == Material.AIR) {
             return;
@@ -127,15 +125,8 @@ public class Wand implements Listener {
                             String valueInt = String.valueOf(KILLS.get(player.getUniqueId()));
                             plugin.getServer().broadcastMessage("Player has " + valueInt + " kills");
 
-                            try {
-                                Bukkit.broadcastMessage("saveToKillsFile is called");
-                                FileUtilities.saveToKillsFile(onlinePlayer.getUniqueId().toString(), valueInt);
+                            killsFile.toJson(player.getUniqueId().toString(), true);
                                 //Above saves kills to file
-                            }catch (IOException e) {
-                                e.printStackTrace();
-                            }
-
-
                         }
 
                     }

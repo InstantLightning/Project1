@@ -29,6 +29,11 @@ public class Project1 extends JavaPlugin {
         items.customRecipeNumberOne();
         getLogger().info("Project1 enabled");
         ArenaCoordinates arenaCoordinates = new ArenaCoordinates();
-        arenaCoordinates.fromJson();
+        KillsFile killsFile = new KillsFile();
+        //Ungrey to create kills file
+        //killsFile.toJson();
+        //Ungrey to create coordinates file
+        //arenaCoordinates.toJson();
+        //arenaCoordinates.fromJson();
     }
 }

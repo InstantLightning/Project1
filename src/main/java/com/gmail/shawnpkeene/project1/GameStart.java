@@ -27,10 +27,16 @@ public class GameStart extends BukkitRunnable {
             for (Player player: Bukkit.getOnlinePlayers()) {
                 //Bukkit.broadcastMessage("for loop for players ran");
                 Location loc = player.getLocation();
-                Location location = new Location(player.getWorld(), 544f, 4f, -558f);
-                Location location2 = new Location(player.getWorld(), 576f, 4f, -558f);
+                ArenaCoordinates coordinates = new ArenaCoordinates();
+                int[] redLoc = coordinates.getRedTeamCoordinates();
+                int[] blueLoc = coordinates.getBlueTeamCoordinates();
+                int[] arenaLoc = coordinates.getArenaCoordinates();
+                Location location = new Location(player.getWorld(), redLoc[0], redLoc[1], redLoc[2]);
+                Location location2 = new Location(player.getWorld(), blueLoc[0], blueLoc[1], blueLoc[2]);
                 //542 x1, 578 x2, -573 z1, -548 z2
-                if (loc.getBlockZ() > -573 && loc.getBlockZ() < -548 && loc.getBlockX() < 578 && loc.getBlockX() > 542) {
+                //z1 first, z2 second, x2 third, x1 last
+                if (loc.getBlockZ() > arenaLoc[2] && loc.getBlockZ() < arenaLoc[3] &&
+                        loc.getBlockX() < arenaLoc[1] && loc.getBlockX() > arenaLoc[0]) {
                     //Bukkit.broadcastMessage("if statement in for loop ran");
                     String string = String.valueOf(counter);
                     player.sendTitle(ChatColor.GOLD + "Game begins in " + string, null, 0, 20, 20);

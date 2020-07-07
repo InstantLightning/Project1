@@ -40,7 +40,9 @@ public class JoinVillager implements Listener {
     public void clickInventory(InventoryClickEvent event) {
 
         Player player = (Player) event.getWhoClicked();
-        Location loc = new Location(player.getWorld(), 558.8D, 5D, -570.5D);
+        ArenaCoordinates coordinates = new ArenaCoordinates();
+        int[] gameLobbyLoc = coordinates.getGameLobbyCoordinates();
+        Location loc = new Location(player.getWorld(), gameLobbyLoc[0], gameLobbyLoc[1], gameLobbyLoc[2]);
         Inventory gui = event.getClickedInventory();
 
         if (event.getCurrentItem() == null) {

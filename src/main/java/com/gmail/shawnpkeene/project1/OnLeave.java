@@ -16,8 +16,11 @@ public class OnLeave implements Listener {
         Player player = event.getPlayer();
         Location loc = player.getLocation();
         JoinVillager villager = new JoinVillager();
-
-        if (loc.getBlockZ() >= -572 && loc.getBlockZ() <= -548 && loc.getBlockX() <= 578 && loc.getBlockX() >= 542) {
+        ArenaCoordinates coordinates = new ArenaCoordinates();
+        int[] arenaLoc = coordinates.getArenaCoordinates();
+        //z1 first, z2 second, x2 third, x1 fourth
+        if (loc.getBlockZ() >= arenaLoc[2] && loc.getBlockZ() <= arenaLoc[3] &&
+                loc.getBlockX() <= arenaLoc[1] && loc.getBlockX() >= arenaLoc[0]) {
             TeamBalance.onLeaveGame(player);
             villager.setPlayersInZone(-1);
 
