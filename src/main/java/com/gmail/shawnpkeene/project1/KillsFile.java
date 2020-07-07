@@ -33,8 +33,7 @@ public class KillsFile {
                 kills = ((Long)json.get(playerID)).intValue();
                 kills += 1;
                 json.put(playerID, kills);
-            }
-            else {
+            } else {
                 json.put(playerID, kills);
             }
             FileUtils.write(file, json.toJSONString(), StandardCharsets.UTF_8);
