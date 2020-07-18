@@ -124,9 +124,12 @@ public class Wand implements Listener {
                             KILLS.put(player.getUniqueId(), ++kills);
                             String valueInt = String.valueOf(KILLS.get(player.getUniqueId()));
                             plugin.getServer().broadcastMessage("Player has " + valueInt + " kills");
-
+                            /*
+                            Right here it saves to kills file on every kill. I would change this by simply calling
+                            this method if the player leaves the server.
+                             */
                             killsFile.toJson(player.getUniqueId().toString(), true);
-                                //Above saves kills to file
+                                //Above saves kills to files
                         }
 
                     }
